@@ -36,6 +36,12 @@ final class ThoughtStoreTests: XCTestCase {
         XCTAssertTrue(store.thoughts.isEmpty)
     }
 
+    func testAddTrimsLeadingAndTrailingWhitespace() {
+        let store = makeStore()
+        store.add("  hello world  \n")
+        XCTAssertEqual(store.thoughts.first?.content, "hello world")
+    }
+
     func testUpdateChangesContentAndUpdatedAt() {
         let store = makeStore()
         store.add("original")

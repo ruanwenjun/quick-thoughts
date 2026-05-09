@@ -52,7 +52,7 @@ final class ThoughtStore: ObservableObject {
         let trimmed = content.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
         let now = Date()
-        let t = Thought(id: UUID(), content: content, createdAt: now, updatedAt: now)
+        let t = Thought(id: UUID(), content: trimmed, createdAt: now, updatedAt: now)
         thoughts.insert(t, at: 0)
         saveSubject.send()
     }
