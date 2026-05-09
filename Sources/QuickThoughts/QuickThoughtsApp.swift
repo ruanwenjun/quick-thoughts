@@ -1,5 +1,6 @@
 import SwiftUI
 import AppKit
+import KeyboardShortcuts
 
 @main
 struct QuickThoughtsApp: App {
@@ -15,8 +16,13 @@ struct QuickThoughtsApp: App {
             .appendingPathComponent("thoughts.json")
         let repo = JSONFileRepository(fileURL: dataURL)
         let store = ThoughtStore(repo: repo)
+        let capture = CaptureWindowController(store: store)
         _store = StateObject(wrappedValue: store)
-        _capture = StateObject(wrappedValue: CaptureWindowController(store: store))
+        _capture = StateObject(wrappedValue: capture)
+
+        KeyboardShortcuts.onKeyDown(for: .toggleCapture) { [capture] in
+            Task { @MainActor in capture.toggle() }
+        }
 
         DispatchQueue.main.async {
             for w in NSApp.windows where w.identifier?.rawValue == "main" {
