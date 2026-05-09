@@ -6,6 +6,7 @@ import KeyboardShortcuts
 struct QuickThoughtsApp: App {
     @StateObject private var store: ThoughtStore
     @StateObject private var capture: CaptureWindowController
+    private let dataFileURL: URL
 
     init() {
         NSApp.setActivationPolicy(.accessory)
@@ -14,6 +15,8 @@ struct QuickThoughtsApp: App {
         let dataURL = appSupport
             .appendingPathComponent("QuickThoughts", isDirectory: true)
             .appendingPathComponent("thoughts.json")
+        self.dataFileURL = dataURL
+
         let repo = JSONFileRepository(fileURL: dataURL)
         let store = ThoughtStore(repo: repo)
         let capture = CaptureWindowController(store: store)
@@ -41,5 +44,9 @@ struct QuickThoughtsApp: App {
         }
         .defaultSize(width: 720, height: 560)
         .windowResizability(.contentMinSize)
+
+        Settings {
+            SettingsView(dataFileURL: dataFileURL)
+        }
     }
 }
