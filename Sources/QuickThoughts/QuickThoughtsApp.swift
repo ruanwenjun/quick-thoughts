@@ -4,6 +4,7 @@ import AppKit
 @main
 struct QuickThoughtsApp: App {
     @StateObject private var store: ThoughtStore
+    @StateObject private var capture: CaptureWindowController
 
     init() {
         NSApp.setActivationPolicy(.accessory)
@@ -13,10 +14,10 @@ struct QuickThoughtsApp: App {
             .appendingPathComponent("QuickThoughts", isDirectory: true)
             .appendingPathComponent("thoughts.json")
         let repo = JSONFileRepository(fileURL: dataURL)
-        _store = StateObject(wrappedValue: ThoughtStore(repo: repo))
+        let store = ThoughtStore(repo: repo)
+        _store = StateObject(wrappedValue: store)
+        _capture = StateObject(wrappedValue: CaptureWindowController(store: store))
 
-        // SwiftUI may auto-instantiate the "main" Window at launch even for an accessory app.
-        // Hide it on the next runloop tick so we start clean — user reopens via menu.
         DispatchQueue.main.async {
             for w in NSApp.windows where w.identifier?.rawValue == "main" {
                 w.orderOut(nil)
@@ -26,7 +27,7 @@ struct QuickThoughtsApp: App {
 
     var body: some Scene {
         MenuBarExtra("Quick Thoughts", systemImage: "bubble.left.and.text.bubble.right") {
-            MenuBarContent()
+            MenuBarContent(capture: capture)
         }
 
         Window("Quick Thoughts", id: "main") {
