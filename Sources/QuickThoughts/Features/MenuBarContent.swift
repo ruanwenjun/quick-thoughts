@@ -14,7 +14,10 @@ struct MenuBarContent: View {
             Divider()
         }
         Button("新建想法") { capture.show() }
-        Button("打开面板") { openWindow(id: "main") }
+        Button("打开面板") {
+            NSApp.activate(ignoringOtherApps: true)
+            openWindow(id: "main")
+        }
         Divider()
         Button("设置...") {
             NSApp.activate(ignoringOtherApps: true)

@@ -9,28 +9,21 @@ final class ThoughtStore: ObservableObject {
 
     private let repo: JSONFileRepository
     private let saveSubject = PassthroughSubject<Void, Never>()
-    private var saveCancellable: AnyCancellable?
-    private var terminationObserver: NSObjectProtocol?
+    private var cancellables = Set<AnyCancellable>()
 
     init(repo: JSONFileRepository, debounceMilliseconds: Int = 500) {
         self.repo = repo
         loadInitial()
 
-        saveCancellable = saveSubject
+        saveSubject
             .debounce(for: .milliseconds(debounceMilliseconds), scheduler: DispatchQueue.main)
             .sink { [weak self] _ in self?.flush() }
+            .store(in: &cancellables)
 
-        terminationObserver = NotificationCenter.default.addObserver(
-            forName: NSApplication.willTerminateNotification,
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in self?.flush() }
-    }
-
-    deinit {
-        if let obs = terminationObserver {
-            NotificationCenter.default.removeObserver(obs)
-        }
+        NotificationCenter.default
+            .publisher(for: NSApplication.willTerminateNotification)
+            .sink { [weak self] _ in self?.flush() }
+            .store(in: &cancellables)
     }
 
     // MARK: - Loading
