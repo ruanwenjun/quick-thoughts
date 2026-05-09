@@ -10,12 +10,12 @@ struct CaptureTextEditor: NSViewRepresentable {
         let scroll = NSTextView.scrollableTextView()
         let tv = scroll.documentView as! NSTextView
         tv.delegate = context.coordinator
-        tv.font = .systemFont(ofSize: 15)
+        tv.font = .systemFont(ofSize: 16, weight: .regular)
         tv.isRichText = false
         tv.allowsUndo = true
         tv.backgroundColor = .clear
         tv.drawsBackground = false
-        tv.textContainerInset = NSSize(width: 12, height: 12)
+        tv.textContainerInset = NSSize(width: 18, height: 16)
         tv.string = text
         scroll.drawsBackground = false
         scroll.hasVerticalScroller = true

@@ -23,11 +23,13 @@ struct ThoughtRowView: View {
     }()
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 6) {
             HStack {
                 Text(Self.relativeFormatter.localizedString(for: thought.createdAt, relativeTo: Date()))
-                    .font(.caption)
+                    .font(.system(size: 11, design: .monospaced))
                     .foregroundStyle(.secondary)
+                    .textCase(.uppercase)
+                    .tracking(0.5)
                     .help(Self.absoluteFormatter.string(from: thought.createdAt))
                 Spacer()
                 if isHovering && !isEditing && !pendingDelete {
@@ -41,13 +43,14 @@ struct ThoughtRowView: View {
                 deleteConfirmation
             } else {
                 Text(thought.content)
-                    .font(.body)
+                    .font(.system(size: 14))
+                    .lineSpacing(2)
                     .textSelection(.enabled)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
-        .padding(.vertical, 6)
-        .padding(.horizontal, 4)
+        .padding(.vertical, 10)
+        .padding(.horizontal, 6)
         .background(pendingDelete ? Color.red.opacity(0.08) : Color.clear)
         .cornerRadius(6)
         .onHover { isHovering = $0 }

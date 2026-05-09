@@ -19,19 +19,21 @@ struct MainPanelView: View {
             } else {
                 List(filtered) { thought in
                     ThoughtRowView(thought: thought, store: store)
+                        .listRowSeparatorTint(Color.secondary.opacity(0.15))
                 }
-                .listStyle(.inset)
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
             }
 
-            Divider()
+            Divider().opacity(0.4)
             HStack {
                 Text(footerText)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.tertiary)
                 Spacer()
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 6)
+            .padding(.horizontal, 14)
+            .padding(.vertical, 8)
         }
         .frame(minWidth: 480, minHeight: 360)
         .searchable(text: $query, placement: .toolbar, prompt: "搜索想法")
