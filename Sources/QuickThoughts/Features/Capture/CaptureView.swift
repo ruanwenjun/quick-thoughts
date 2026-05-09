@@ -26,17 +26,34 @@ struct CaptureView: View {
             }
 
             Divider().opacity(0.4)
-            HStack(spacing: 0) {
+            HStack(spacing: 14) {
                 Spacer()
-                Text("Shift+Enter 换行 · Enter 保存 · Esc 取消")
-                    .font(.system(size: 11))
-                    .foregroundStyle(.tertiary)
+                hint("⇧↵", "换行")
+                hint("↵", "保存")
+                hint("esc", "取消")
             }
             .padding(.horizontal, 14)
             .padding(.vertical, 8)
         }
         .background(.thinMaterial)
         .frame(width: 560)
+    }
+
+    private func hint(_ key: String, _ label: String) -> some View {
+        HStack(spacing: 5) {
+            Text(key)
+                .font(.system(size: 10, weight: .medium, design: .monospaced))
+                .foregroundStyle(.secondary)
+                .padding(.horizontal, 5)
+                .padding(.vertical, 2)
+                .background(
+                    RoundedRectangle(cornerRadius: 4, style: .continuous)
+                        .fill(Color.primary.opacity(0.08))
+                )
+            Text(label)
+                .font(.system(size: 11))
+                .foregroundStyle(.tertiary)
+        }
     }
 
     private func submit() {

@@ -17,12 +17,15 @@ struct MainPanelView: View {
             } else if filtered.isEmpty {
                 noMatchesView
             } else {
-                List(filtered) { thought in
-                    ThoughtRowView(thought: thought, store: store)
-                        .listRowSeparatorTint(Color.secondary.opacity(0.15))
+                ScrollView {
+                    LazyVStack(spacing: 8) {
+                        ForEach(filtered) { thought in
+                            ThoughtRowView(thought: thought, store: store)
+                        }
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
                 }
-                .listStyle(.plain)
-                .scrollContentBackground(.hidden)
             }
 
             Divider().opacity(0.4)
