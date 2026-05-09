@@ -2,20 +2,20 @@ import SwiftUI
 
 struct CaptureView: View {
     @ObservedObject var store: ThoughtStore
-    @Binding var draft: String
+    @ObservedObject var capture: CaptureWindowController
     var onClose: () -> Void
 
     var body: some View {
         VStack(spacing: 0) {
             ZStack(alignment: .topLeading) {
                 CaptureTextEditor(
-                    text: $draft,
+                    text: $capture.draft,
                     onSubmit: submit,
                     onCancel: cancel
                 )
                 .frame(minHeight: 96, idealHeight: 128, maxHeight: 400)
 
-                if draft.isEmpty {
+                if capture.draft.isEmpty {
                     Text("记下一闪而过的想法…")
                         .font(.system(size: 16))
                         .foregroundStyle(.tertiary)
@@ -40,8 +40,8 @@ struct CaptureView: View {
     }
 
     private func submit() {
-        store.add(draft)
-        draft = ""
+        store.add(capture.draft)
+        capture.draft = ""
         onClose()
     }
 

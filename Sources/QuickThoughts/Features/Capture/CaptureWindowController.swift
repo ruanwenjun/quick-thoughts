@@ -56,8 +56,7 @@ final class CaptureWindowController: NSObject, NSWindowDelegate, ObservableObjec
         let host = NSHostingView(
             rootView: CaptureView(
                 store: store,
-                draft: Binding(get: { [weak self] in self?.draft ?? "" },
-                               set: { [weak self] in self?.draft = $0 }),
+                capture: self,
                 onClose: { [weak self] in self?.hide() }
             )
         )
