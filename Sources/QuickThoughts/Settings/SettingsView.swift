@@ -63,7 +63,6 @@ struct SettingsView: View {
             loginToggleError = nil
         } catch {
             loginToggleError = "切换失败：\(error.localizedDescription)。该功能需要已签名的 App 包，开发模式下可能不可用。"
-            launchAtLogin = !enabled
         }
     }
 }
