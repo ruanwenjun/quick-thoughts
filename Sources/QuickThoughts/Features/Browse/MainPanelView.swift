@@ -18,7 +18,7 @@ struct MainPanelView: View {
                 noMatchesView
             } else {
                 List(filtered) { thought in
-                    ThoughtRowView(thought: thought)
+                    ThoughtRowView(thought: thought, store: store)
                 }
                 .listStyle(.inset)
             }
