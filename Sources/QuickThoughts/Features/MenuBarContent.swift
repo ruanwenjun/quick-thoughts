@@ -4,8 +4,15 @@ import AppKit
 struct MenuBarContent: View {
     @Environment(\.openWindow) private var openWindow
     @ObservedObject var capture: CaptureWindowController
+    @ObservedObject var store: ThoughtStore
 
     var body: some View {
+        if let err = store.lastSaveError {
+            Text("⚠️ 保存失败：\(err)")
+                .font(.caption)
+                .foregroundStyle(.red)
+            Divider()
+        }
         Button("新建想法") { capture.show() }
         Button("打开面板") { openWindow(id: "main") }
         Divider()

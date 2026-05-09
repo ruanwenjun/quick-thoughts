@@ -36,7 +36,7 @@ struct QuickThoughtsApp: App {
 
     var body: some Scene {
         MenuBarExtra("Quick Thoughts", systemImage: "bubble.left.and.text.bubble.right") {
-            MenuBarContent(capture: capture)
+            MenuBarContent(capture: capture, store: store)
         }
 
         Window("Quick Thoughts", id: "main") {
