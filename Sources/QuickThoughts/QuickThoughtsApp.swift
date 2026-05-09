@@ -9,7 +9,7 @@ struct QuickThoughtsApp: App {
     private let dataFileURL: URL
 
     init() {
-        NSApp.setActivationPolicy(.accessory)
+        NSApplication.shared.setActivationPolicy(.accessory)
 
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
         let dataURL = appSupport
