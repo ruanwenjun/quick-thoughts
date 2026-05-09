@@ -50,10 +50,11 @@ final class JSONFileRepositoryTests: XCTestCase {
         try json.write(to: url, atomically: true, encoding: .utf8)
         let repo = JSONFileRepository(fileURL: url)
         XCTAssertThrowsError(try repo.load()) { error in
-            guard case JSONFileRepository.RepoError.unsupportedSchemaVersion = error else {
+            guard case JSONFileRepository.RepoError.unsupportedSchemaVersion(let v) = error else {
                 XCTFail("expected unsupportedSchemaVersion, got \(error)")
                 return
             }
+            XCTAssertEqual(v, 99)
         }
     }
 

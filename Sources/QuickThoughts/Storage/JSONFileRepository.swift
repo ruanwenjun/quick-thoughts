@@ -47,6 +47,7 @@ struct JSONFileRepository {
         let data = try encoder.encode(payload)
 
         let tmp = fileURL.appendingPathExtension("tmp")
+        defer { try? FileManager.default.removeItem(at: tmp) }
         try data.write(to: tmp, options: .atomic)
 
         if FileManager.default.fileExists(atPath: fileURL.path) {
@@ -59,8 +60,9 @@ struct JSONFileRepository {
     private func backupCorruptFile() throws {
         let stamp = ISO8601DateFormatter().string(from: Date())
             .replacingOccurrences(of: ":", with: "-")
+        let suffix = UUID().uuidString.prefix(8)
         let parent = fileURL.deletingLastPathComponent()
-        let backupName = fileURL.lastPathComponent + ".corrupt-\(stamp)"
+        let backupName = fileURL.lastPathComponent + ".corrupt-\(stamp)-\(suffix)"
         let backup = parent.appendingPathComponent(backupName)
         try FileManager.default.moveItem(at: fileURL, to: backup)
     }
