@@ -29,13 +29,9 @@
 
 ## 📸 截图
 
-> 截图待补 —— 把图片放到 `assets/` 目录下（命名 `capture.png` / `panel.png` / `settings.png`），然后取消下面 HTML 注释即可启用。
-
-<!--
-| 捕捉弹窗 | 主面板 | 设置 |
-| :---: | :---: | :---: |
-| <img src="assets/capture.png" width="320" alt="Capture popup" /> | <img src="assets/panel.png" width="320" alt="Main panel" /> | <img src="assets/settings.png" width="320" alt="Settings" /> |
--->
+| 捕捉弹窗 | 主面板 |
+| :---: | :---: |
+| <img src="assets/capture.png" width="480" alt="Capture popup — Spotlight 风格的多行输入弹窗" /> | <img src="assets/panel.png" width="480" alt="Main panel — 卡片式列表 + 顶部搜索" /> |
 
 ## 🚀 安装
 
