@@ -15,6 +15,14 @@
 
 ---
 
+## 💡 项目背景
+
+写代码、读文档、开会，灵光一现常常出现：一个 bug 的可能成因、一个改进点子、一句想发的群消息、一个待回的邮件。这些想法一闪而过，几秒钟没记下来就忘了。
+
+打开 Notion / Apple Notes / Bear 都太重 —— 切换到另一个 App、点进笔记本、定位光标、打字、保存、再切回来，思路已经断掉。
+
+Quick Thoughts 想做到的就一件事：**任何 App 里 ⌥⌘T → 输入 → Enter，三步完成捕捉**。轻到不打断当前工作流，又能在事后浏览 / 搜索 / 整理。
+
 ## ✨ 特性
 
 - ⌨️ **全局快捷键唤起**（默认 `⌥⌘T`，可自定义）—— 不打断当前工作流
@@ -37,11 +45,13 @@
 
 ### 系统要求
 
-- macOS 13.0 或更新
-- 源码安装需要 [Xcode Command Line Tools](https://developer.apple.com/xcode/resources/)：
-  ```bash
-  xcode-select --install
-  ```
+- **运行**：macOS 13.0 或更新
+- **源码编译**：需要[完整 Xcode](https://apps.apple.com/cn/app/xcode/id497799835?mt=12)（从 Mac App Store 安装，免费）。
+  - 仅装 Command Line Tools (`xcode-select --install`) 不够：依赖的 `KeyboardShortcuts` 库用到了 `#Preview` 宏（需要 Xcode 的宏插件），且 `swift test` 需要 Xcode 自带的 XCTest framework。
+  - 装完 Xcode 首次启动让它装好 additional components，然后切换 toolchain：
+    ```bash
+    sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+    ```
 
 ### 方式 A — 从 Releases 下载（推荐普通用户）
 
