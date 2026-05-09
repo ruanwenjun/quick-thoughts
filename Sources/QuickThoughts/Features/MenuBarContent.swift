@@ -19,15 +19,18 @@ struct MenuBarContent: View {
             openWindow(id: "main")
         }
         Divider()
-        Button("设置...") {
-            NSApp.activate(ignoringOtherApps: true)
-            if #available(macOS 14, *) {
-                NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-            } else {
+        if #available(macOS 14, *) {
+            SettingsLink {
+                Text("设置...")
+            }
+            .keyboardShortcut(",")
+        } else {
+            Button("设置...") {
+                NSApp.activate(ignoringOtherApps: true)
                 NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
             }
+            .keyboardShortcut(",")
         }
-        .keyboardShortcut(",")
         Divider()
         Button("退出") { NSApp.terminate(nil) }
             .keyboardShortcut("q")
