@@ -9,8 +9,13 @@ final class ThoughtTests: XCTestCase {
             createdAt: Date(timeIntervalSince1970: 1_700_000_000),
             updatedAt: Date(timeIntervalSince1970: 1_700_000_100)
         )
-        let encoded = try JSONEncoder().encode(original)
-        let decoded = try JSONDecoder().decode(Thought.self, from: encoded)
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+
+        let encoded = try encoder.encode(original)
+        let decoded = try decoder.decode(Thought.self, from: encoded)
         XCTAssertEqual(decoded, original)
     }
 }
