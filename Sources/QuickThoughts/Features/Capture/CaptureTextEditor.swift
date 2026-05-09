@@ -24,6 +24,7 @@ struct CaptureTextEditor: NSViewRepresentable {
     }
 
     func updateNSView(_ scroll: NSScrollView, context: Context) {
+        context.coordinator.parent = self
         let tv = scroll.documentView as! NSTextView
         if tv.string != text { tv.string = text }
     }
