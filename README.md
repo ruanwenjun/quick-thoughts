@@ -6,7 +6,7 @@
 
 A menu bar–resident macOS app for capturing thoughts: hit a global shortcut, type, press return.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![macOS](https://img.shields.io/badge/macOS-13%2B-blue)](https://www.apple.com/macos)
 [![Swift](https://img.shields.io/badge/Swift-5.9%2B-orange?logo=swift&logoColor=white)](https://swift.org)
 [![SwiftUI](https://img.shields.io/badge/SwiftUI-native-blueviolet?logo=swift&logoColor=white)]()
@@ -188,7 +188,7 @@ Issues and PRs are welcome. Before submitting:
 
 ## 📄 License
 
-[MIT](LICENSE) © 2026 ruanwenjun
+[Apache License 2.0](LICENSE) © 2026 ruanwenjun
 
 ## 🙏 Acknowledgements
 
