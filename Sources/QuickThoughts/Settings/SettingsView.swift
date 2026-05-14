@@ -6,19 +6,30 @@ import AppKit
 struct SettingsView: View {
     let dataFileURL: URL
 
+    @EnvironmentObject private var localizer: Localizer
     @State private var launchAtLogin: Bool = (SMAppService.mainApp.status == .enabled)
     @State private var loginToggleError: String?
 
     var body: some View {
         Form {
-            Section("快捷键") {
-                LabeledContent("唤起捕捉弹窗") {
+            Section(localizer.t(.settingsKeyboardShortcuts)) {
+                LabeledContent(localizer.t(.settingsToggleCapture)) {
                     KeyboardShortcuts.Recorder(for: .toggleCapture)
                 }
             }
 
-            Section("启动") {
-                Toggle("登录时启动 Quick Thoughts", isOn: $launchAtLogin)
+            Section(localizer.t(.settingsLanguage)) {
+                Picker(localizer.t(.settingsLanguage), selection: $localizer.language) {
+                    ForEach(AppLanguage.allCases, id: \.self) { lang in
+                        Text(lang.displayName(in: localizer.effective)).tag(lang)
+                    }
+                }
+                .labelsHidden()
+                .pickerStyle(.segmented)
+            }
+
+            Section(localizer.t(.settingsLaunch)) {
+                Toggle(localizer.t(.settingsLaunchAtLogin), isOn: $launchAtLogin)
                     .onChange(of: launchAtLogin) { newValue in
                         applyLaunchAtLogin(newValue)
                     }
@@ -29,8 +40,8 @@ struct SettingsView: View {
                 }
             }
 
-            Section("数据文件") {
-                LabeledContent("路径") {
+            Section(localizer.t(.settingsData)) {
+                LabeledContent(localizer.t(.settingsPath)) {
                     HStack {
                         Text(dataFileURL.path)
                             .font(.callout.monospaced())
@@ -43,13 +54,13 @@ struct SettingsView: View {
                             Image(systemName: "folder")
                         }
                         .buttonStyle(.borderless)
-                        .help("在 Finder 中显示")
+                        .help(localizer.t(.settingsShowInFinder))
                     }
                 }
             }
         }
         .formStyle(.grouped)
-        .frame(width: 480, height: 320)
+        .frame(width: 480, height: 360)
         .padding()
     }
 
@@ -62,7 +73,7 @@ struct SettingsView: View {
             }
             loginToggleError = nil
         } catch {
-            loginToggleError = "切换失败：\(error.localizedDescription)。该功能需要已签名的 App 包，开发模式下可能不可用。"
+            loginToggleError = localizer.t(.settingsLaunchError(error.localizedDescription))
         }
     }
 }

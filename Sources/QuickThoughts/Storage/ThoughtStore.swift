@@ -2,9 +2,14 @@ import Foundation
 import Combine
 import AppKit
 
+enum LoadFailure: Equatable {
+    case unsupportedSchema(Int)
+    case generic(String)
+}
+
 final class ThoughtStore: ObservableObject {
     @Published private(set) var thoughts: [Thought] = []
-    @Published private(set) var fatalLoadError: String?
+    @Published private(set) var fatalLoadError: LoadFailure?
     @Published private(set) var lastSaveError: String?
 
     private let repo: JSONFileRepository
@@ -33,9 +38,9 @@ final class ThoughtStore: ObservableObject {
             let loaded = try repo.load()
             self.thoughts = loaded.sorted { $0.createdAt > $1.createdAt }
         } catch JSONFileRepository.RepoError.unsupportedSchemaVersion(let v) {
-            self.fatalLoadError = "数据由更新版 App (schema v\(v)) 写入，请升级 Quick Thoughts 后再试。"
+            self.fatalLoadError = .unsupportedSchema(v)
         } catch {
-            self.fatalLoadError = "无法加载数据：\(error.localizedDescription)"
+            self.fatalLoadError = .generic(error.localizedDescription)
         }
     }
 

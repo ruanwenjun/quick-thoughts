@@ -4,6 +4,7 @@ struct ThoughtRowView: View {
     let thought: Thought
     @ObservedObject var store: ThoughtStore
 
+    @EnvironmentObject private var localizer: Localizer
     @Environment(\.colorScheme) private var colorScheme
     @State private var isHovering = false
     @State private var isEditing = false
@@ -104,11 +105,11 @@ struct ThoughtRowView: View {
 
     private var actionIcons: some View {
         HStack(spacing: 4) {
-            iconButton(systemName: "pencil", help: "编辑") {
+            iconButton(systemName: "pencil", help: localizer.t(.rowEditTooltip)) {
                 editDraft = thought.content
                 isEditing = true
             }
-            iconButton(systemName: "trash", help: "删除", tint: .red) {
+            iconButton(systemName: "trash", help: localizer.t(.rowDeleteTooltip), tint: .red) {
                 pendingDelete = true
             }
         }
@@ -147,12 +148,12 @@ struct ThoughtRowView: View {
                         .strokeBorder(Color.primary.opacity(0.1), lineWidth: 0.5)
                 )
             HStack(spacing: 8) {
-                Button("取消") {
+                Button(localizer.t(.rowCancel)) {
                     isEditing = false
                     editDraft = ""
                 }
                 .keyboardShortcut(.cancelAction)
-                Button("保存") {
+                Button(localizer.t(.rowSave)) {
                     let trimmed = editDraft.trimmingCharacters(in: .whitespacesAndNewlines)
                     guard !trimmed.isEmpty else { return }
                     store.update(id: thought.id, content: trimmed)
@@ -171,11 +172,11 @@ struct ThoughtRowView: View {
             Image(systemName: "exclamationmark.triangle.fill")
                 .foregroundStyle(.red)
                 .font(.system(size: 12))
-            Text("确认删除这条想法？")
+            Text(localizer.t(.rowConfirmDelete))
                 .font(.system(size: 13))
                 .foregroundStyle(.red)
             Spacer()
-            Button("取消") { pendingDelete = false }
+            Button(localizer.t(.rowCancel)) { pendingDelete = false }
                 .buttonStyle(.plain)
                 .padding(.horizontal, 10)
                 .padding(.vertical, 4)
@@ -183,7 +184,7 @@ struct ThoughtRowView: View {
                     RoundedRectangle(cornerRadius: 6, style: .continuous)
                         .fill(Color.primary.opacity(0.06))
                 )
-            Button("删除") {
+            Button(localizer.t(.rowDelete)) {
                 store.delete(id: thought.id)
             }
             .buttonStyle(.plain)

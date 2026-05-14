@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct MainPanelView: View {
+    @EnvironmentObject private var localizer: Localizer
     @ObservedObject var store: ThoughtStore
     @State private var query: String = ""
 
@@ -11,7 +12,7 @@ struct MainPanelView: View {
     var body: some View {
         VStack(spacing: 0) {
             if let err = store.fatalLoadError {
-                errorView(err)
+                errorView(localizer.t(err))
             } else if store.thoughts.isEmpty {
                 emptyView
             } else if filtered.isEmpty {
@@ -39,14 +40,14 @@ struct MainPanelView: View {
             .padding(.vertical, 8)
         }
         .frame(minWidth: 480, minHeight: 360)
-        .searchable(text: $query, placement: .toolbar, prompt: "搜索想法")
+        .searchable(text: $query, placement: .toolbar, prompt: localizer.t(.mainSearchPrompt))
     }
 
     private var footerText: String {
         if query.isEmpty {
-            return "共 \(store.thoughts.count) 条想法"
+            return localizer.t(.mainCountTotal(store.thoughts.count))
         } else {
-            return "找到 \(filtered.count) / \(store.thoughts.count) 条"
+            return localizer.t(.mainCountFiltered(filtered.count, store.thoughts.count))
         }
     }
 
@@ -55,8 +56,8 @@ struct MainPanelView: View {
             Image(systemName: "bubble.left.and.text.bubble.right")
                 .font(.system(size: 48))
                 .foregroundStyle(.secondary)
-            Text("还没有想法").font(.headline)
-            Text("按下 ⌥⌘T 记录第一条想法")
+            Text(localizer.t(.mainEmptyTitle)).font(.headline)
+            Text(localizer.t(.mainEmptyHint))
                 .font(.callout)
                 .foregroundStyle(.secondary)
         }
@@ -68,7 +69,7 @@ struct MainPanelView: View {
             Image(systemName: "magnifyingglass")
                 .font(.largeTitle)
                 .foregroundStyle(.secondary)
-            Text("没有匹配的想法").font(.headline)
+            Text(localizer.t(.mainNoMatches)).font(.headline)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }

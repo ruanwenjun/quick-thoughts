@@ -37,16 +37,19 @@ struct QuickThoughtsApp: App {
     var body: some Scene {
         MenuBarExtra("Quick Thoughts", systemImage: "bubble.left.and.text.bubble.right") {
             MenuBarContent(capture: capture, store: store)
+                .environmentObject(Localizer.shared)
         }
 
         Window("Quick Thoughts", id: "main") {
             MainPanelView(store: store)
+                .environmentObject(Localizer.shared)
         }
         .defaultSize(width: 720, height: 560)
         .windowResizability(.contentMinSize)
 
         Settings {
             SettingsView(dataFileURL: dataFileURL)
+                .environmentObject(Localizer.shared)
         }
     }
 }

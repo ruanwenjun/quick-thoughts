@@ -2,104 +2,103 @@
 
 # 💭 Quick Thoughts
 
-**让一闪而过的想法不再溜走。**
+**Catch fleeting thoughts before they slip away.**
 
-一个常驻菜单栏的 macOS 想法捕捉工具：按下全局快捷键，弹窗输入，回车保存。
+A menu bar–resident macOS app for capturing thoughts: hit a global shortcut, type, press return.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![macOS](https://img.shields.io/badge/macOS-13%2B-blue)](https://www.apple.com/macos)
 [![Swift](https://img.shields.io/badge/Swift-5.9%2B-orange?logo=swift&logoColor=white)](https://swift.org)
 [![SwiftUI](https://img.shields.io/badge/SwiftUI-native-blueviolet?logo=swift&logoColor=white)]()
 
+**English** · [中文](README.zh-CN.md)
+
 </div>
 
 ---
 
-## 💡 项目背景
+## 💡 Motivation
 
-写代码、读文档、开会，灵光一现常常出现：一个 bug 的可能成因、一个改进点子、一句想发的群消息、一个待回的邮件。这些想法一闪而过，几秒钟没记下来就忘了。
+While coding, reading docs, or sitting in a meeting, ideas flash by: a possible cause for a bug, a small improvement, a message to send, an email to reply to. They vanish in seconds.
 
-打开 Notion / Apple Notes / Bear 都太重 —— 切换到另一个 App、点进笔记本、定位光标、打字、保存、再切回来，思路已经断掉。
+Opening Notion / Apple Notes / Bear is too heavy — switch apps, find the notebook, place the cursor, type, save, switch back, and the thread of thought is already broken.
 
-Quick Thoughts 想做到的就一件事：**任何 App 里 ⌥⌘T → 输入 → Enter，三步完成捕捉**。轻到不打断当前工作流，又能在事后浏览 / 搜索 / 整理。
+Quick Thoughts does exactly one thing: **from any app, ⌥⌘T → type → Enter, three steps**. Light enough not to interrupt your flow, structured enough to browse / search / clean up later.
 
-## ✨ 特性
+## ✨ Features
 
-- ⌨️ **全局快捷键唤起**（默认 `⌥⌘T`，可自定义）—— 不打断当前工作流
-- 📝 **Spotlight 风格弹窗**：多行输入，`Enter` 保存、`Shift+Enter` 换行、`Esc` 取消
-- 🗂 **草稿保留**：误关弹窗（点外部 / Esc）不丢内容，下次唤起继续写
-- 🔍 **全文搜索**：主面板实时过滤，大小写不敏感
-- ✏️ **行内编辑 / 删除**：悬停浮出操作，删除有二次确认
-- 💾 **JSON 单文件持久化**：方便备份、迁移、grep
-- 🛡️ **防丢数据**：原子写、损坏文件自动备份、schema 版本守卫
-- 🌗 **深 / 浅色自适应**：跟随系统外观
-- 🪶 **超轻量**：菜单栏常驻、无 Dock 图标、原生 Swift + SwiftUI、无 Electron 包袱
+- ⌨️ **Global hotkey** (default `⌥⌘T`, customizable) — never break the current flow
+- 📝 **Spotlight-style popup**: multi-line input, `Enter` to save, `Shift+Enter` for newline, `Esc` to cancel
+- 🗂 **Draft preservation**: closing the popup (clicking outside / Esc) keeps your text for next time
+- 🔍 **Full-text search**: instant filtering in the main panel, case-insensitive
+- ✏️ **Inline edit / delete**: hover-revealed actions, delete asks for confirmation
+- 💾 **Single-file JSON storage**: easy to back up, migrate, grep
+- 🛡️ **Crash-safe**: atomic writes, auto-backup of corrupt files, schema version guard
+- 🌗 **Light / dark adaptive**: follows the system appearance
+- 🌐 **Bilingual UI**: English + 简体中文, switch in Settings
+- 🪶 **Featherweight**: menu bar–only, no Dock icon, native Swift + SwiftUI, no Electron baggage
 
-## 📸 截图
+## 🚀 Install
 
-| 捕捉弹窗 | 主面板 |
-| :---: | :---: |
-| <img src="assets/capture.png" width="480" alt="Capture popup — Spotlight 风格的多行输入弹窗" /> | <img src="assets/panel.png" width="480" alt="Main panel — 卡片式列表 + 顶部搜索" /> |
+### Requirements
 
-## 🚀 安装
-
-### 系统要求
-
-- **运行**：macOS 13.0 或更新
-- **源码编译**：需要[完整 Xcode](https://apps.apple.com/cn/app/xcode/id497799835?mt=12)（从 Mac App Store 安装，免费）。
-  - 仅装 Command Line Tools (`xcode-select --install`) 不够：依赖的 `KeyboardShortcuts` 库用到了 `#Preview` 宏（需要 Xcode 的宏插件），且 `swift test` 需要 Xcode 自带的 XCTest framework。
-  - 装完 Xcode 首次启动让它装好 additional components，然后切换 toolchain：
+- **Runtime**: macOS 13.0 or later
+- **Build from source**: [full Xcode](https://apps.apple.com/app/xcode/id497799835) (free, Mac App Store).
+  - Command Line Tools alone (`xcode-select --install`) is not enough: the `KeyboardShortcuts` dependency uses `#Preview` macros (needs the Xcode macro plugin), and `swift test` needs Xcode's bundled XCTest framework.
+  - After installing Xcode, let it install additional components on first launch, then switch the toolchain:
     ```bash
     sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
     ```
 
-### 方式 A — 从 Releases 下载（推荐普通用户）
+### Option A — Download from Releases (recommended for end users)
 
-> 首个 Release 待发布。
+> First release pending.
 
-1. 到 [Releases](https://github.com/ruanwenjun/quick-thoughts/releases) 下载最新 `Quick-Thoughts-x.y.z.zip`
-2. 解压，把 `Quick Thoughts.app` 拖到 `/Applications`
-3. **首次启动**：右键 → 打开 → 在弹窗里再次点 **打开**（一次性绕过 Gatekeeper，因为暂未 Apple 公证；之后双击直接启动）
+1. Grab the latest `Quick-Thoughts-x.y.z.zip` from [Releases](https://github.com/ruanwenjun/quick-thoughts/releases)
+2. Unzip, drag `Quick Thoughts.app` to `/Applications`
+3. **First launch**: right-click → Open → click **Open** in the warning dialog (one-time Gatekeeper bypass since the app isn't notarized yet; double-click works thereafter)
 
-### 方式 B — 源码安装（推荐开发者）
+### Option B — Build from source (recommended for developers)
 
 ```bash
 git clone https://github.com/ruanwenjun/quick-thoughts.git
 cd quick-thoughts
-make install        # → /Applications，需要 sudo 密码
-# 或免 sudo：
+make install        # → /Applications, requires sudo
+# or sudo-free:
 make install-user   # → ~/Applications
 ```
 
-`make install` 会 release 编译、生成 `.app`、ad-hoc 签名、拷贝到目标目录。
+`make install` runs a release build, produces the `.app` bundle, ad-hoc signs it, and copies it to the target directory.
 
-## 🎯 使用
+## 🎯 Usage
 
-| 操作 | 快捷键 |
+| Action | Shortcut |
 | --- | --- |
-| 唤起捕捉弹窗 | `⌥⌘T`（设置可改） |
-| 弹窗换行 | `Shift+Enter` |
-| 弹窗保存并关闭 | `Enter` |
-| 弹窗取消（保留草稿） | `Esc` |
-| 打开设置 | `⌘,` |
+| Open capture popup | `⌥⌘T` (configurable) |
+| Newline in popup | `Shift+Enter` |
+| Save & close popup | `Enter` |
+| Cancel popup (keep draft) | `Esc` |
+| Open Settings | `⌘,` |
 
-菜单栏图标点开能看到 "新建想法 / 打开面板 / 设置... / 退出"。
+Click the menu bar icon for "New Thought / Open Panel / Settings… / Quit".
 
-主面板里**悬停**任意一行会浮出 ✏️ 编辑、🗑️ 删除（删除会先在行内弹一次确认，避免误删）；顶部搜索框实时过滤。
+In the main panel, **hover** any row to reveal ✏️ edit and 🗑️ delete (delete shows an inline confirmation first to prevent mistakes); the toolbar search box filters in real time.
 
-### 开机启动
+The Settings window has a **Language** picker — `Auto / English / 中文`. `Auto` follows the system language (Chinese variants → 中文, otherwise English).
 
-推荐去「系统设置 → 通用 → 登录项」把 `Quick Thoughts` 加进去。
+### Launch at login
 
-> 设置里也有"登录时启动"开关（基于 `SMAppService`），但这个 API 需要 App 经过正式代码签名才能稳定工作；当前 ad-hoc 签名版本可能会失败 —— 看到内联红字错误属正常。系统设置加登录项更可靠。
+The recommended path is to add `Quick Thoughts` under **System Settings → General → Login Items**.
 
-## ⚙️ 数据存储
+> Settings also has a "Launch at login" toggle (built on `SMAppService`), but that API needs a properly signed app to work reliably; with the current ad-hoc–signed build it may fail — the inline red error is expected. The System Settings approach is more reliable.
+
+## ⚙️ Data Storage
 
 ```
 ~/Library/Application Support/QuickThoughts/thoughts.json
 ```
 
-格式简单稳定，方便手工备份、grep、迁移：
+A simple, stable format — easy to back up, grep, or migrate by hand:
 
 ```json
 {
@@ -107,7 +106,7 @@ make install-user   # → ~/Applications
   "thoughts": [
     {
       "id": "5C9E1F8A-...",
-      "content": "今天看到一个不错的设计",
+      "content": "Saw a nice design today",
       "createdAt": "2026-05-09T10:23:45Z",
       "updatedAt": "2026-05-09T10:23:45Z"
     }
@@ -115,76 +114,77 @@ make install-user   # → ~/Applications
 }
 ```
 
-设置页能看到当前路径，并提供「在 Finder 中显示」按钮。
+Settings shows the current path with a "Show in Finder" button.
 
-文件读写策略：
-- **原子写**：先写 `thoughts.json.tmp`，再 `replaceItemAt` / `moveItem`，崩溃不丢老文件
-- **防抖**：连续输入只在停顿 500ms 后落盘一次；进程退出（`willTerminate`）时强制 flush
-- **损坏恢复**：JSON 解析失败 → 自动备份原文件为 `thoughts.json.corrupt-<timestamp>-<uuid>`，启动空数据库继续运行
-- **Schema 守卫**：读到比当前更高的 `schemaVersion` 直接拒绝写入并提示用户升级 App
+File I/O strategy:
+- **Atomic writes**: write `thoughts.json.tmp` first, then `replaceItemAt` / `moveItem` — a crash doesn't lose the previous file
+- **Debounced**: continuous edits flush 500 ms after the last keystroke; a forced flush runs on `willTerminate`
+- **Corruption recovery**: JSON decode failure → backs up the original as `thoughts.json.corrupt-<timestamp>-<uuid>`, starts with an empty database
+- **Schema guard**: reading a higher `schemaVersion` than supported aborts writes and prompts the user to upgrade
 
 ## 🛣️ Roadmap
 
-**v1 已完成**：捕捉、浏览、搜索、编辑、删除、设置、JSON 持久化、菜单栏 App、Spotlight 风格弹窗、卡片化主面板。
+**v1 shipped**: capture, browse, search, edit, delete, settings, JSON persistence, menu bar app, Spotlight-style popup, card-style main panel, bilingual UI.
 
-**v1 明确不做（YAGNI）**：iCloud 同步、iOS / Web 端、标签 / 分组、富文本 / Markdown 渲染、图片附件、提醒 / 闹钟、多账户。
+**Explicitly not in v1 (YAGNI)**: iCloud sync, iOS / web clients, tags / folders, rich text / Markdown rendering, image attachments, reminders / alarms, multi-account.
 
-**未来可能（欢迎 Issue 讨论）**：
+**Possible future work (issues / discussion welcome)**:
 
-- [ ] Apple Developer 签名 + 公证 → `.dmg` 直接双击启动、`SMAppService` 登录启动稳定可用
-- [ ] Homebrew Cask（`brew install --cask quick-thoughts`）
-- [ ] GitHub Actions CI：每次打 tag 自动 build / 签名 / 发 Release
-- [ ] 标签 / 简单 Markdown 高亮
-- [ ] 导出 / 一键备份成 zip
+- [ ] Apple Developer signing + notarization → double-click `.dmg` install, stable `SMAppService` launch-at-login
+- [ ] Homebrew Cask (`brew install --cask quick-thoughts`)
+- [ ] GitHub Actions CI: tag → build / sign / publish Release
+- [ ] Tags / lightweight Markdown rendering
+- [ ] Export / one-click zip backup
 
-## 🛠️ 开发
+## 🛠️ Development
 
 ```bash
 make build      # swift build (debug)
-make test       # swift test —— 目前 16 个用例覆盖数据层
-make run        # swift run（终端阻塞，关闭终端 App 也会跟着挂）
-make bundle     # 仅打包 .app 到 dist/
-make uninstall  # 删除已安装的 .app
-make clean      # 清理 .build / dist
+make test       # swift test — 16 cases covering the data layer
+make run        # swift run (terminal blocks; closing it kills the app)
+make bundle     # bundle .app into dist/ only
+make uninstall  # remove the installed .app
+make clean      # wipe .build / dist
 ```
 
-### 项目结构
+### Project structure
 
 ```
 Sources/QuickThoughts/
-├── QuickThoughtsApp.swift                 入口；MenuBarExtra + Window + Settings
-├── Models/Thought.swift                   数据模型
+├── QuickThoughtsApp.swift                 entry; MenuBarExtra + Window + Settings
+├── Models/Thought.swift                   data model
 ├── Storage/
-│   ├── JSONFileRepository.swift           原子写、损坏备份、schema 守卫
-│   └── ThoughtStore.swift                 ObservableObject + CRUD + 防抖落盘
+│   ├── JSONFileRepository.swift           atomic write, corruption backup, schema guard
+│   └── ThoughtStore.swift                 ObservableObject + CRUD + debounced flush
 ├── Features/
-│   ├── MenuBarContent.swift               菜单栏菜单
-│   ├── Capture/                           捕捉弹窗（NSPanel + NSTextView 桥接）
-│   └── Browse/                            主面板 + 卡片行
-└── Settings/                              快捷键 Recorder + 登录启动
+│   ├── MenuBarContent.swift               menu bar menu
+│   ├── Capture/                           capture popup (NSPanel + NSTextView bridge)
+│   └── Browse/                            main panel + card row
+├── Localization/                          bilingual UI (Auto / English / 中文)
+└── Settings/                              shortcut Recorder + login launch
 ```
 
-依赖只一个：[KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts) —— 全局快捷键注册 + SwiftUI Recorder 组件。
+One runtime dependency: [KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts) — global shortcut registration + SwiftUI Recorder component.
 
-### 测试覆盖
+### Test coverage
 
 ```
-ThoughtTests              Codable 往返
-JSONFileRepositoryTests   读写 / 缺文件 / 损坏文件 / 高 schema 版本 / 嵌套目录
-ThoughtStoreTests         CRUD / 空白裁剪 / 搜索 / 排序 / 落盘 / fatalLoadError
+ThoughtTests              Codable round-trip
+JSONFileRepositoryTests   read / write / missing file / corrupt file / higher schema / nested dirs
+ThoughtStoreTests         CRUD / whitespace trim / search / sort / flush / fatalLoadError
 ```
 
-UI 层不做单测，依赖手工冒烟。新加 UI 行为请在 PR 描述里附 before/after 截图。
+UI is not unit-tested; relies on manual smoke testing. Please attach before/after screenshots in PRs that touch UI.
 
 ## 🤝 Contributing
 
-欢迎 Issue 和 PR。提交前请确认：
+Issues and PRs are welcome. Before submitting:
 
-1. `make test` 全部通过
-2. `make build` 无新增警告
-3. 改动尽量外科手术式 —— 不顺手"改善"无关代码
-4. UI 改动附 before/after 截图
-5. commit 信息小写动词起头（`feat:` / `fix:` / `style:` / `chore:` 等）
+1. `make test` passes
+2. `make build` has no new warnings
+3. Keep changes surgical — don't "improve" unrelated code along the way
+4. UI changes should include before/after screenshots
+5. Use lowercase verb-prefixed commits (`feat:` / `fix:` / `style:` / `chore:` etc.)
 
 ## 📄 License
 
@@ -192,5 +192,5 @@ UI 层不做单测，依赖手工冒烟。新加 UI 行为请在 PR 描述里附
 
 ## 🙏 Acknowledgements
 
-- [Sindre Sorhus](https://github.com/sindresorhus) 的 [KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts) 让全局快捷键 + 录制 UI 几乎零代码就能用
-- macOS 原生 `MenuBarExtra` / `NSPanel` / `Settings` scene 提供了菜单栏 App 的基础设施
+- [Sindre Sorhus](https://github.com/sindresorhus)' [KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts) — global shortcuts + recording UI with nearly zero code
+- macOS native `MenuBarExtra` / `NSPanel` / `Settings` scenes — the menu bar app substrate

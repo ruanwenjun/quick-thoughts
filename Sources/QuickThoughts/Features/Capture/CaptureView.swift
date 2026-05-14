@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct CaptureView: View {
+    @EnvironmentObject private var localizer: Localizer
     @ObservedObject var store: ThoughtStore
     @ObservedObject var capture: CaptureWindowController
     var onClose: () -> Void
@@ -16,7 +17,7 @@ struct CaptureView: View {
                 .frame(minHeight: 96, idealHeight: 128, maxHeight: 400)
 
                 if capture.draft.isEmpty {
-                    Text("记下一闪而过的想法…")
+                    Text(localizer.t(.capturePlaceholder))
                         .font(.system(size: 16))
                         .foregroundStyle(.tertiary)
                         .padding(.horizontal, 22)
@@ -28,9 +29,9 @@ struct CaptureView: View {
             Divider().opacity(0.4)
             HStack(spacing: 14) {
                 Spacer()
-                hint("⇧↵", "换行")
-                hint("↵", "保存")
-                hint("esc", "取消")
+                hint("⇧↵", localizer.t(.captureHintNewline))
+                hint("↵", localizer.t(.captureHintSave))
+                hint("esc", localizer.t(.captureHintCancel))
             }
             .padding(.horizontal, 14)
             .padding(.vertical, 8)

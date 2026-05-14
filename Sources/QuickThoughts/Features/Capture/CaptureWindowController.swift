@@ -59,6 +59,7 @@ final class CaptureWindowController: NSObject, NSWindowDelegate, ObservableObjec
                 capture: self,
                 onClose: { [weak self] in self?.hide() }
             )
+            .environmentObject(Localizer.shared)
         )
         host.translatesAutoresizingMaskIntoConstraints = false
         p.contentView = host
